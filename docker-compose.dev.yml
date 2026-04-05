@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   postgres:
-    container_name: opencloud-pg
+    container_name: openzalo-pg
     image: postgres:latest
     volumes:
       - ./.docker/postgres:/var/lib/postgresql/data
@@ -16,7 +16,7 @@ services:
     restart: always
 
   redis:
-    container_name: opencloud-redis
+    container_name: openzalo-redis
     image: redis:latest
     volumes:
       - ./.docker/redis:/data
@@ -28,13 +28,13 @@ services:
 
   redisinsight:
     image: redis/redisinsight:latest
-    container_name: redisinsight
+    container_name: openzalo-redisinsight
     ports:
       - '5540:5540'
     restart: always
 
   mondodb:
-    container_name: opencloud-mongodb
+    container_name: openzalo-mongodb
     image: mongo:latest
     volumes:
       - ./.docker/mongodb:/data/db
@@ -46,7 +46,7 @@ services:
     restart: always
 
   mailhog:
-    container_name: opencloud-mailhog
+    container_name: openzalo-mailhog
     image: mailhog/mailhog:latest
     volumes:
       - ./.docker/mailhog:/data

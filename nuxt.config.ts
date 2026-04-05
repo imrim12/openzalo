@@ -216,6 +216,7 @@ export default defineNuxtConfig({
       '/api/payments/sepay/webhook': { cors: false, csurf: false },
       '/api/auth/**': { cors: false, csurf: false },
       '/api/cron/**': { cors: false, csurf: false },
+      '/api/conversations/sse': { cors: false, csurf: false },
     },
     serverAssets: [
       {

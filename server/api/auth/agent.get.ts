@@ -64,5 +64,5 @@ export default defineEventHandler(async (event) => {
 
   await db.insert(activityTable).values({ user_id: user.id, action: ActivityAction.SIGN_IN })
 
-  return sendRedirect(event, '/dashboard')
+  return sendRedirect(event, '/dashboard/inbox')
 })

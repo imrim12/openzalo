@@ -18,6 +18,6 @@ export default defineNuxtRouteMiddleware(async (to) => {
   }
 
   if (authStore.currentUser && to.path === '/auth/login') {
-    return navigateTo('/dashboard')
+    return navigateTo('/dashboard/inbox')
   }
 })
