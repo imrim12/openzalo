@@ -1,4 +1,3 @@
-import tailwindcss from '@tailwindcss/vite'
 import packageJson from './package.json'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
@@ -9,6 +8,7 @@ export default defineNuxtConfig({
     '@nuxt/fonts',
     '@nuxt/hints',
     '@nuxt/icon',
+    '@nuxt/ui',
     '@nuxt/scripts',
     '@nuxt/test-utils',
     '@nuxtjs/device',
@@ -37,9 +37,6 @@ export default defineNuxtConfig({
       },
     },
     vite: {
-      plugins: [
-        tailwindcss(),
-      ],
       server: {
         allowedHosts: true,
       },

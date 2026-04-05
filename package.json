@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@neondatabase/serverless": "catalog:",
-    "@tailwindcss/vite": "catalog:",
+    "@nuxt/ui": "^4.6.1",
     "@tanstack/vue-table": "catalog:",
     "@upstash/redis": "catalog:",
     "clsx": "catalog:",
@@ -37,7 +37,6 @@
     "nodemailer": "catalog:",
     "nuxt": "catalog:",
     "pg": "catalog:",
-    "reka-ui": "catalog:",
     "tailwind-merge": "catalog:",
     "tailwindcss": "catalog:",
     "ts-enum-util": "catalog:",
