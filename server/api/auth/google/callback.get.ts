@@ -1,8 +1,8 @@
 import { and, eq } from 'drizzle-orm'
 import { OAuth2Client } from 'google-auth-library'
 import { ActivityAction, activityTable, identityTable, userTable } from '~~/server/db/pg/schema'
-import { simplifyNanoId } from '~~/server/utils/id'
 import { getPgClient } from '~~/server/utils/pg'
+import { simplifyNanoId } from '~~/shared/utils/id'
 
 export default defineEventHandler(async (event) => {
   const runtimeConfig = useRuntimeConfig()
@@ -59,7 +59,7 @@ export default defineEventHandler(async (event) => {
       username: payload.email!.split('@')[0],
       last_sign_in_at: now,
     }).returning()
-    user = newUser
+    user = newUser!
 
     await db.insert(activityTable).values({ user_id: user.id, action: ActivityAction.SIGN_UP })
   }
@@ -74,7 +74,7 @@ export default defineEventHandler(async (event) => {
       })
       .where(eq(userTable.id, user.id))
       .returning()
-    user = updatedUser
+    user = updatedUser!
   }
 
   // 2. Handle Identity
@@ -101,7 +101,7 @@ export default defineEventHandler(async (event) => {
         provider_data: payload,
         updated_at: now,
       })
-      .where(eq(identityTable.id, existingIdentity[0].id))
+      .where(eq(identityTable.id, existingIdentity[0]!.id))
   }
 
   // Create session

@@ -1,20 +1,21 @@
+import tailwindcss from '@tailwindcss/vite'
 import packageJson from './package.json'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
-    "@nuxt/a11y",
-    "@nuxt/eslint",
-    "@nuxt/fonts",
-    "@nuxt/hints",
-    "@nuxt/icon",
-    "@nuxt/scripts",
-    "@nuxt/test-utils",
-    "@nuxtjs/device",
-    "@pinia/nuxt",
-    "@vueuse/nuxt",
-    "magic-regexp",
-    "nuxt-security",
+    '@nuxt/a11y',
+    '@nuxt/eslint',
+    '@nuxt/fonts',
+    '@nuxt/hints',
+    '@nuxt/icon',
+    '@nuxt/scripts',
+    '@nuxt/test-utils',
+    '@nuxtjs/device',
+    '@pinia/nuxt',
+    '@vueuse/nuxt',
+    'magic-regexp',
+    'nuxt-security',
   ],
 
   $development: {
@@ -36,6 +37,9 @@ export default defineNuxtConfig({
       },
     },
     vite: {
+      plugins: [
+        tailwindcss(),
+      ],
       server: {
         allowedHosts: true,
       },

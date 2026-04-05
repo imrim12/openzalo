@@ -23,7 +23,11 @@
     "test:e2e:ui": "playwright test --ui"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.0.2",
+    "@tailwindcss/vite": "^4.2.2",
+    "@tanstack/vue-table": "^8.21.3",
     "@upstash/redis": "^1.37.0",
+    "clsx": "^2.1.1",
     "drizzle-orm": "^0.45.2",
     "es-toolkit": "^1.45.1",
     "google-auth-library": "^10.6.2",
@@ -33,6 +37,8 @@
     "nodemailer": "^8.0.4",
     "nuxt": "^4.4.2",
     "pg": "^8.20.0",
+    "tailwind-merge": "^3.5.0",
+    "tailwindcss": "^4.2.2",
     "ts-enum-util": "^4.1.0",
     "ts-pattern": "^5.9.0",
     "unstorage": "^1.17.5",

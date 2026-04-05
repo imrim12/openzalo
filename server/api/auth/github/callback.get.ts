@@ -1,7 +1,7 @@
 import { and, eq } from 'drizzle-orm'
 import { ActivityAction, activityTable, identityTable, userTable } from '~~/server/db/pg/schema'
-import { simplifyNanoId } from '~~/server/utils/id'
 import { getPgClient } from '~~/server/utils/pg'
+import { simplifyNanoId } from '~~/shared/utils/id'
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
@@ -79,7 +79,7 @@ export default defineEventHandler(async (event) => {
       username: userProfile.login,
       last_sign_in_at: now,
     }).returning()
-    user = newUser
+    user = newUser!
 
     await db.insert(activityTable).values({ user_id: user.id, action: ActivityAction.SIGN_UP })
   }
@@ -94,7 +94,7 @@ export default defineEventHandler(async (event) => {
       })
       .where(eq(userTable.id, user.id))
       .returning()
-    user = updatedUser
+    user = updatedUser!
   }
 
   // 2. Handle Identity
@@ -121,7 +121,7 @@ export default defineEventHandler(async (event) => {
         provider_data: userProfile,
         updated_at: now,
       })
-      .where(eq(identityTable.id, existingIdentity[0].id))
+      .where(eq(identityTable.id, existingIdentity[0]!.id))
   }
 
   // Create session

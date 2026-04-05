@@ -1,7 +1,7 @@
 import { eq } from 'drizzle-orm'
 import { ActivityAction, activityTable, userTable } from '~~/server/db/pg/schema'
-import { simplifyNanoId } from '~~/server/utils/id'
 import { getPgClient } from '~~/server/utils/pg'
+import { simplifyNanoId } from '~~/shared/utils/id'
 
 export default defineEventHandler(async (event) => {
   // Block in production
@@ -28,7 +28,7 @@ export default defineEventHandler(async (event) => {
       verified: true,
       last_sign_in_at: now,
     }).returning()
-    user = newUser
+    user = newUser!
     await db.insert(activityTable).values({ user_id: user.id, action: ActivityAction.SIGN_UP })
   }
   else {
@@ -36,7 +36,7 @@ export default defineEventHandler(async (event) => {
       .set({ last_sign_in_at: now, updated_at: now })
       .where(eq(userTable.id, user.id))
       .returning()
-    user = updated
+    user = updated!
   }
 
   // Create session in Redis

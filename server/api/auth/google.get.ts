@@ -1,4 +1,4 @@
-import { simplifyNanoId } from '~~/server/utils/id'
+import { simplifyNanoId } from '~~/shared/utils/id'
 
 export default defineEventHandler(async (event) => {
   const runtimeConfig = useRuntimeConfig()

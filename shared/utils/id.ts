@@ -12,11 +12,12 @@ export function createId() {
   crypto.getRandomValues(randomValues)
 
   for (let i = 0; i < ID_LENGTH; i++) {
-    result += ID_ALPHABET[randomValues[i] % alphabetLength]
+    result += ID_ALPHABET[randomValues[i]! % alphabetLength]
   }
 
   return result
 }
+
 export function generateRandomString(length: number = 32) {
   const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
   let result = ''
@@ -26,7 +27,7 @@ export function generateRandomString(length: number = 32) {
   crypto.getRandomValues(randomValues)
 
   for (let i = 0; i < length; i++) {
-    result += alphabet[randomValues[i] % alphabetLength]
+    result += alphabet[randomValues[i]! % alphabetLength]
   }
 
   return result
@@ -37,4 +38,12 @@ export function simplifyNanoId(length: number = 21) {
   const newId = customAlphabet('0123456789abcdefghijklmnopqrstuvwxyz', length)
 
   return newId()
+}
+
+export function randomInt(min: number, max: number): number {
+  return Math.floor(Math.random() * (max - min + 1)) + min
+}
+
+export function randomFrom<T>(array: T[]): T {
+  return array[Math.floor(Math.random() * array.length)]!
 }
