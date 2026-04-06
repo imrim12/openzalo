@@ -32,20 +32,26 @@ export const $http = $fetch.create({
     if (typeof context.request === 'string' && options.query) {
       context.request = interpolatePath(context.request, options.query)
     }
+    
+    const headers = new Headers(options.headers)
 
     if (import.meta.server) {
-      const headers = useRequestHeaders(['cookie'])
-      options.headers = {
-        ...options.headers,
-        ...headers,
+      const reqHeaders = useRequestHeaders(['cookie'])
+      for (const [key, value] of Object.entries(reqHeaders)) {
+        if (value) {
+          headers.set(key, value)
+        }
       }
     }
 
-    const csrfConfig = useCsrf()
-    options.headers = {
-      ...options.headers,
-      [csrfConfig.headerName]: csrfConfig.csrf,
+    if (typeof useCsrf !== 'undefined') {
+      const csrfConfig = useCsrf()
+      if (csrfConfig.headerName && csrfConfig.csrf) {
+        headers.set(csrfConfig.headerName, csrfConfig.csrf)
+      }
     }
+
+    options.headers = headers
   },
   onResponse(context) {
     if (!context.options.silent && import.meta.client) {
@@ -61,7 +67,12 @@ export const $http = $fetch.create({
 
     const statusCode = error?.response?.status
 
-    const isRequestFromExternalUrl = !String(error.response.url).startsWith(getBaseUrl())
+    const runtimeConfig = useRuntimeConfig()
+    const baseDomain = runtimeConfig.public.baseDomain as string
+    const baseUrl = (!import.meta.dev || runtimeConfig.public.sslEnabled)
+      ? `https://${baseDomain}`
+      : `http://${baseDomain}`
+    const isRequestFromExternalUrl = !String(error.response.url).startsWith(baseUrl)
 
     switch (statusCode) {
       case 401: {
