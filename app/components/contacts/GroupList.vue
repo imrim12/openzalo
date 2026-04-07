@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { ConversationWithContact } from '~/types'
-
 const { conversations } = useInbox()
 
 const groups = computed(() =>

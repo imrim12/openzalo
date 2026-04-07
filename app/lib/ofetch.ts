@@ -32,7 +32,7 @@ export const $http = $fetch.create({
     if (typeof context.request === 'string' && options.query) {
       context.request = interpolatePath(context.request, options.query)
     }
-    
+
     const headers = new Headers(options.headers)
 
     if (import.meta.server) {

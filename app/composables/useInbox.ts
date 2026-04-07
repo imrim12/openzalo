@@ -16,8 +16,10 @@ export function useInbox() {
     isLoading.value = true
     try {
       const params: Record<string, string> = {}
-      if (filter.value === 'unread') params.status = 'open'
-      if (cursor) params.cursor = cursor
+      if (filter.value === 'unread')
+        params.status = 'open'
+      if (cursor)
+        params.cursor = cursor
 
       const data = await $http<ConversationWithContact[]>('/api/conversations', { params })
 
@@ -29,7 +31,7 @@ export function useInbox() {
       }
 
       if (data.length > 0) {
-        const last = data[data.length - 1]
+        const last = data.at(-1)
         cursor = last.last_message_at?.toString()
       }
     }

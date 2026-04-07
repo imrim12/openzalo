@@ -17,14 +17,16 @@ watch(() => messages.value.length, async () => {
 })
 
 function shouldShowDateSeparator(msgs: MessageWithMeta[], index: number): boolean {
-  if (index === 0) return true
+  if (index === 0)
+    return true
   const prev = msgs[index - 1]
   const curr = msgs[index]
   return new Date(prev.sent_at).toDateString() !== new Date(curr.sent_at).toDateString()
 }
 
 function shouldShowAvatar(msgs: MessageWithMeta[], index: number): boolean {
-  if (index === msgs.length - 1) return true
+  if (index === msgs.length - 1)
+    return true
   const curr = msgs[index]
   const next = msgs[index + 1]
   return curr.sender_type !== next.sender_type || curr.sender_name !== next.sender_name
@@ -74,7 +76,9 @@ function onScroll() {
       class="h-full flex flex-col items-center justify-center gap-2 text-(--ui-text-muted)"
     >
       <UIcon name="i-lucide-message-circle" class="size-8 opacity-30" />
-      <p class="text-sm">No messages yet</p>
+      <p class="text-sm">
+        No messages yet
+      </p>
     </div>
   </div>
 </template>

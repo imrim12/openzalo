@@ -12,7 +12,8 @@ const selected = ref<string[]>([])
 
 function toggle(value: string) {
   const idx = selected.value.indexOf(value)
-  if (idx >= 0) selected.value.splice(idx, 1)
+  if (idx >= 0)
+    selected.value.splice(idx, 1)
   else selected.value.push(value)
 }
 </script>

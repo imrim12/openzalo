@@ -5,7 +5,8 @@ const message = ref('')
 const { sendMessage, isSending } = useChat(toRef(props, 'conversationId'))
 
 async function handleSend() {
-  if (!message.value.trim()) return
+  if (!message.value.trim())
+    return
   await sendMessage(message.value)
   message.value = ''
 }

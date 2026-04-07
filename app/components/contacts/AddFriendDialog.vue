@@ -31,7 +31,9 @@ const suggestions = ref<{ id: string, name: string, avatar?: string, source: str
 
         <!-- Recent results -->
         <div v-if="recentResults.length" class="space-y-1">
-          <div class="text-xs font-semibold text-(--ui-text-muted)">Recent results</div>
+          <div class="text-xs font-semibold text-(--ui-text-muted)">
+            Recent results
+          </div>
           <div
             v-for="r in recentResults"
             :key="r.id"
@@ -39,15 +41,21 @@ const suggestions = ref<{ id: string, name: string, avatar?: string, source: str
           >
             <UAvatar :src="r.avatar" size="sm" />
             <div>
-              <div class="text-sm font-medium">{{ r.name }}</div>
-              <div class="text-xs text-(--ui-text-muted)">{{ r.phone }}</div>
+              <div class="text-sm font-medium">
+                {{ r.name }}
+              </div>
+              <div class="text-xs text-(--ui-text-muted)">
+                {{ r.phone }}
+              </div>
             </div>
           </div>
         </div>
 
         <!-- Suggestions -->
         <div v-if="suggestions.length" class="space-y-1">
-          <div class="text-xs font-semibold text-(--ui-text-muted)">People you may know</div>
+          <div class="text-xs font-semibold text-(--ui-text-muted)">
+            People you may know
+          </div>
           <div
             v-for="s in suggestions"
             :key="s.id"
@@ -55,8 +63,12 @@ const suggestions = ref<{ id: string, name: string, avatar?: string, source: str
           >
             <UAvatar :src="s.avatar" size="sm" />
             <div class="flex-1">
-              <div class="text-sm font-medium">{{ s.name }}</div>
-              <div class="text-xs text-(--ui-text-muted)">{{ s.source }}</div>
+              <div class="text-sm font-medium">
+                {{ s.name }}
+              </div>
+              <div class="text-xs text-(--ui-text-muted)">
+                {{ s.source }}
+              </div>
             </div>
             <UButton label="Add" variant="outline" size="xs" />
           </div>

@@ -49,8 +49,12 @@ const statusColor: Record<string, string> = {
 
         <div v-else-if="channels.length === 0" class="flex flex-col items-center justify-center py-20 gap-3 text-(--ui-text-muted)">
           <UIcon name="i-lucide-radio" class="size-12 opacity-30" />
-          <div class="font-medium">No channels connected</div>
-          <div class="text-sm">Add a Zalo account or Facebook page to get started</div>
+          <div class="font-medium">
+            No channels connected
+          </div>
+          <div class="text-sm">
+            Add a Zalo account or Facebook page to get started
+          </div>
           <UButton
             label="Add Channel"
             icon="i-lucide-plus"
@@ -76,7 +80,9 @@ const statusColor: Record<string, string> = {
                 />
               </div>
               <div class="flex-1 min-w-0">
-                <div class="font-medium text-sm truncate">{{ ch.name }}</div>
+                <div class="font-medium text-sm truncate">
+                  {{ ch.name }}
+                </div>
                 <div class="text-xs text-(--ui-text-muted) mt-0.5">
                   {{ ch.account_identifier ?? ch.channel_type }}
                 </div>

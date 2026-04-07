@@ -2,7 +2,7 @@
 import type { ConversationWithContact } from '~/types'
 import { formatRelativeTime } from '~/lib/utils'
 
-const props = defineProps<{
+defineProps<{
   conversation: ConversationWithContact
   active: boolean
 }>()

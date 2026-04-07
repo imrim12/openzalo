@@ -116,8 +116,12 @@ const search = ref('')
         class="flex flex-col items-center justify-center gap-2 h-full text-(--ui-text-muted)"
       >
         <UIcon name="i-lucide-mail-open" class="size-12 opacity-30" />
-        <div class="font-medium">No group invitations</div>
-        <div class="text-sm">You have no pending group or community invitations.</div>
+        <div class="font-medium">
+          No group invitations
+        </div>
+        <div class="text-sm">
+          You have no pending group or community invitations.
+        </div>
       </div>
     </template>
   </UDashboardPanel>

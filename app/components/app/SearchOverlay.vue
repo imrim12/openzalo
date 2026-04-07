@@ -1,7 +1,11 @@
 <script setup lang="ts">
 const isOpen = defineModel<boolean>('open')
 
-defineShortcuts({ meta_k: () => { isOpen.value = true } })
+defineShortcuts({
+  meta_k: () => {
+    isOpen.value = true
+  }
+})
 
 const { conversations } = useInbox()
 

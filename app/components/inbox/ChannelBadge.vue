@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const props = defineProps<{ type: 'zalo' | 'facebook' | 'telegram' | 'webchat' }>()
+defineProps<{ type: 'zalo' | 'facebook' | 'telegram' | 'webchat' }>()
 
 const config: Record<string, { icon: string, bg: string }> = {
   zalo: { icon: 'i-simple-icons-zalo', bg: 'bg-blue-500' },

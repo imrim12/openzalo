@@ -57,7 +57,9 @@ function contactMenuItems(contact: ContactItem) {
     </div>
 
     <template v-for="[letter, group] in groupedContacts" :key="letter">
-      <div class="text-xs font-bold text-(--ui-text-muted) mt-4 mb-2">{{ letter }}</div>
+      <div class="text-xs font-bold text-(--ui-text-muted) mt-4 mb-2">
+        {{ letter }}
+      </div>
       <div
         v-for="contact in group"
         :key="contact.id"
@@ -70,7 +72,9 @@ function contactMenuItems(contact: ContactItem) {
           size="md"
         />
         <div class="flex-1 min-w-0">
-          <div class="text-sm font-medium">{{ contact.name }}</div>
+          <div class="text-sm font-medium">
+            {{ contact.name }}
+          </div>
           <div v-if="(contact.tags ?? []).length" class="flex items-center gap-1 mt-0.5">
             <span
               v-for="(tag, i) in (contact.tags ?? []).slice(0, 2)"

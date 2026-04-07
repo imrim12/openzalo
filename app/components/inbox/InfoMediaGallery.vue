@@ -27,7 +27,7 @@ const sharedMedia = computed<MessageAttachment[]>(() =>
           :src="media.thumbnailUrl || media.url"
           class="aspect-square object-cover rounded cursor-pointer hover:opacity-80"
           :alt="media.fileName"
-        />
+        >
         <div
           v-if="sharedMedia.length === 0"
           class="col-span-4 text-xs text-(--ui-text-muted) text-center py-3"

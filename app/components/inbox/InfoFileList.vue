@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { MessageAttachment } from '~~/shared/types/message'
-import { formatFileSize, formatDate } from '~/lib/utils'
+import { formatDate, formatFileSize } from '~/lib/utils'
 
 const props = defineProps<{ conversationId: string }>()
 
@@ -14,18 +14,25 @@ const sharedFiles = computed(() =>
 
 function fileTypeIcon(file: MessageAttachment): string {
   const ext = file.fileName?.split('.').pop()?.toLowerCase() ?? ''
-  if (ext === 'pdf') return 'i-lucide-file-text'
-  if (['doc', 'docx'].includes(ext)) return 'i-lucide-file-type'
-  if (['xls', 'xlsx'].includes(ext)) return 'i-lucide-file-spreadsheet'
-  if (['zip', 'rar', '7z'].includes(ext)) return 'i-lucide-file-archive'
+  if (ext === 'pdf')
+    return 'i-lucide-file-text'
+  if (['doc', 'docx'].includes(ext))
+    return 'i-lucide-file-type'
+  if (['xls', 'xlsx'].includes(ext))
+    return 'i-lucide-file-spreadsheet'
+  if (['zip', 'rar', '7z'].includes(ext))
+    return 'i-lucide-file-archive'
   return 'i-lucide-file'
 }
 
 function fileTypeBg(file: MessageAttachment): string {
   const ext = file.fileName?.split('.').pop()?.toLowerCase() ?? ''
-  if (ext === 'pdf') return 'bg-red-500'
-  if (['doc', 'docx'].includes(ext)) return 'bg-blue-500'
-  if (['xls', 'xlsx'].includes(ext)) return 'bg-green-500'
+  if (ext === 'pdf')
+    return 'bg-red-500'
+  if (['doc', 'docx'].includes(ext))
+    return 'bg-blue-500'
+  if (['xls', 'xlsx'].includes(ext))
+    return 'bg-green-500'
   return 'bg-gray-500'
 }
 </script>
@@ -48,7 +55,9 @@ function fileTypeBg(file: MessageAttachment): string {
             <UIcon :name="fileTypeIcon(file)" class="size-5 text-white" />
           </div>
           <div class="flex-1 min-w-0">
-            <div class="text-sm font-medium truncate">{{ file.fileName ?? 'File' }}</div>
+            <div class="text-sm font-medium truncate">
+              {{ file.fileName ?? 'File' }}
+            </div>
             <div class="text-xs text-(--ui-text-muted)">
               {{ formatFileSize(file.fileSize) }}
               <span class="mx-1">&middot;</span>

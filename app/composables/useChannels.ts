@@ -30,7 +30,8 @@ export function useChannels() {
       body: data,
     })
     const idx = channels.value.findIndex(c => c.id === id)
-    if (idx >= 0) channels.value[idx] = ch
+    if (idx >= 0)
+      channels.value[idx] = ch
     return ch
   }
 

@@ -10,7 +10,8 @@ export function useContacts() {
     isLoading.value = true
     try {
       const params: Record<string, string> = {}
-      if (search.value) params.search = search.value
+      if (search.value)
+        params.search = search.value
       contacts.value = await $http<ContactItem[]>('/api/contacts', { params })
     }
     finally {
@@ -27,7 +28,8 @@ export function useContacts() {
   async function updateContact(id: string, data: Partial<ContactItem>) {
     const c = await $http<ContactItem>(`/api/contacts/${id}`, { method: 'PATCH', body: data })
     const idx = contacts.value.findIndex(x => x.id === id)
-    if (idx >= 0) contacts.value[idx] = c
+    if (idx >= 0)
+      contacts.value[idx] = c
     return c
   }
 

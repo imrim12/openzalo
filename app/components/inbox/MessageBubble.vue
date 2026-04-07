@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { MessageWithMeta } from '~/types'
-import { formatTime, formatFileSize } from '~/lib/utils'
+import { formatFileSize, formatTime } from '~/lib/utils'
 
 const props = defineProps<{
   message: MessageWithMeta
@@ -70,15 +70,19 @@ const contextMenuItems = [
           :src="message.attachments[0].url"
           class="rounded-lg max-w-xs cursor-pointer"
           :alt="message.attachments[0].fileName"
-        />
+        >
         <div
           v-else-if="message.message_type === 'file' && message.attachments?.[0]"
           class="flex items-center gap-2"
         >
           <UIcon name="i-lucide-file" class="size-8 shrink-0" />
           <div>
-            <div class="font-medium">{{ message.attachments[0].fileName }}</div>
-            <div class="text-xs opacity-70">{{ formatFileSize(message.attachments[0].fileSize) }}</div>
+            <div class="font-medium">
+              {{ message.attachments[0].fileName }}
+            </div>
+            <div class="text-xs opacity-70">
+              {{ formatFileSize(message.attachments[0].fileSize) }}
+            </div>
           </div>
         </div>
         <div v-else-if="message.message_type === 'sticker'" class="text-4xl">

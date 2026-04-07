@@ -34,12 +34,14 @@ defineProps<{ conversation: ConversationWithContact }>()
 
     <!-- 4 action buttons -->
     <div class="grid grid-cols-4 gap-2 text-center">
-      <div v-for="btn in [
-        { icon: 'i-lucide-bell-off', label: 'Mute' },
-        { icon: 'i-lucide-pin', label: 'Pin' },
-        { icon: 'i-lucide-user-plus', label: 'Add' },
-        { icon: 'i-lucide-settings', label: 'Manage' },
-      ]" :key="btn.label" class="flex flex-col items-center gap-1 cursor-pointer">
+      <div
+        v-for="btn in [
+          { icon: 'i-lucide-bell-off', label: 'Mute' },
+          { icon: 'i-lucide-pin', label: 'Pin' },
+          { icon: 'i-lucide-user-plus', label: 'Add' },
+          { icon: 'i-lucide-settings', label: 'Manage' },
+        ]" :key="btn.label" class="flex flex-col items-center gap-1 cursor-pointer"
+      >
         <UButton :icon="btn.icon" variant="ghost" size="sm" />
         <span class="text-[10px] text-(--ui-text-muted)">{{ btn.label }}</span>
       </div>

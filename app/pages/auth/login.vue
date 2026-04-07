@@ -14,7 +14,9 @@ function signIn(provider: string) {
 <template>
   <div class="w-full max-w-sm space-y-6">
     <div class="text-center space-y-2">
-      <h1 class="text-2xl font-bold">OpenZalo</h1>
+      <h1 class="text-2xl font-bold">
+        OpenZalo
+      </h1>
       <p class="text-(--ui-text-muted) text-sm">
         Unified inbox for Zalo &amp; Facebook
       </p>

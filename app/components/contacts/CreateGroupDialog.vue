@@ -9,7 +9,8 @@ const selectedMembers = ref<string[]>([])
 const { contacts } = useContacts()
 
 const filteredContacts = computed(() => {
-  if (!memberSearch.value) return contacts.value.slice(0, 20)
+  if (!memberSearch.value)
+    return contacts.value.slice(0, 20)
   return contacts.value.filter(c =>
     c.name.toLowerCase().includes(memberSearch.value.toLowerCase()),
   )
@@ -57,7 +58,9 @@ function toggleMember(id: string) {
 
         <!-- Contact list with checkboxes -->
         <div class="max-h-64 overflow-y-auto space-y-1">
-          <div class="text-xs font-semibold text-(--ui-text-muted) mb-2">Contacts</div>
+          <div class="text-xs font-semibold text-(--ui-text-muted) mb-2">
+            Contacts
+          </div>
           <div
             v-for="contact in filteredContacts"
             :key="contact.id"

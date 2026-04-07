@@ -67,7 +67,9 @@ const activeConversationId = ref<string | null>(null)
           class="h-full flex flex-col items-center justify-center gap-3 text-(--ui-text-muted)"
         >
           <UIcon name="i-lucide-message-circle" class="size-12 opacity-30" />
-          <p class="text-sm">Select a conversation to start chatting</p>
+          <p class="text-sm">
+            Select a conversation to start chatting
+          </p>
         </div>
       </div>
 

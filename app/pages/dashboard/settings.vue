@@ -23,7 +23,9 @@ async function handleSave() {
       <div class="max-w-lg mx-auto p-6 space-y-6">
         <!-- Profile section -->
         <div class="space-y-4">
-          <h3 class="font-semibold">Profile</h3>
+          <h3 class="font-semibold">
+            Profile
+          </h3>
           <div class="flex items-center gap-4">
             <UAvatar
               :src="user?.avatar ?? undefined"
@@ -31,8 +33,12 @@ async function handleSave() {
               size="xl"
             />
             <div>
-              <div class="font-medium">{{ user?.name }}</div>
-              <div class="text-sm text-(--ui-text-muted)">{{ user?.primary_email }}</div>
+              <div class="font-medium">
+                {{ user?.name }}
+              </div>
+              <div class="text-sm text-(--ui-text-muted)">
+                {{ user?.primary_email }}
+              </div>
             </div>
           </div>
           <UFormField label="Display Name">
@@ -49,7 +55,9 @@ async function handleSave() {
 
         <!-- Account section -->
         <div class="space-y-4">
-          <h3 class="font-semibold">Account</h3>
+          <h3 class="font-semibold">
+            Account
+          </h3>
           <div class="grid grid-cols-[120px_1fr] gap-y-3 text-sm">
             <span class="text-(--ui-text-muted)">Email</span>
             <span>{{ user?.primary_email }}</span>
@@ -64,7 +72,9 @@ async function handleSave() {
 
         <!-- Danger zone -->
         <div class="space-y-4">
-          <h3 class="font-semibold text-red-500">Danger Zone</h3>
+          <h3 class="font-semibold text-red-500">
+            Danger Zone
+          </h3>
           <UButton
             label="Log Out"
             color="error"

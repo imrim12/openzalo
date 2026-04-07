@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { formatDate } from '~/lib/utils'
-
 const isOpen = defineModel<boolean>('open')
 
 const authStore = useAuthStore()
@@ -40,7 +38,9 @@ const user = computed(() => authStore.currentUser)
 
         <!-- Personal info -->
         <div class="space-y-2">
-          <div class="font-semibold text-sm">Personal Info</div>
+          <div class="font-semibold text-sm">
+            Personal Info
+          </div>
           <div class="grid grid-cols-[100px_1fr] gap-y-2 text-sm">
             <span class="text-(--ui-text-muted)">Email</span>
             <span>{{ user?.primary_email }}</span>
@@ -54,7 +54,7 @@ const user = computed(() => authStore.currentUser)
             variant="link"
             size="xs"
             icon="i-lucide-pencil"
-            :to="'/dashboard/settings'"
+            to="/dashboard/settings"
           />
         </div>
       </div>

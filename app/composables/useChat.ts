@@ -25,7 +25,8 @@ export function useChat(conversationId: MaybeRef<string>) {
     isLoading.value = true
     try {
       const params: Record<string, string> = { limit: '50' }
-      if (cursor) params.cursor = cursor
+      if (cursor)
+        params.cursor = cursor
 
       const data = await $http<MessageWithMeta[]>(`/api/conversations/${id.value}/messages`, { params })
 
@@ -36,7 +37,8 @@ export function useChat(conversationId: MaybeRef<string>) {
         messages.value = [...data, ...messages.value]
       }
 
-      if (data.length < 50) hasMore.value = false
+      if (data.length < 50)
+        hasMore.value = false
       if (data.length > 0) {
         cursor = data[0].sent_at.toString()
       }
@@ -63,7 +65,8 @@ export function useChat(conversationId: MaybeRef<string>) {
   }
 
   async function loadMore() {
-    if (!hasMore.value || isLoading.value) return
+    if (!hasMore.value || isLoading.value)
+      return
     await fetchMessages(false)
   }
 
