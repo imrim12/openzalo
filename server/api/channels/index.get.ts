@@ -1,4 +1,4 @@
-import { and, desc, eq } from 'drizzle-orm'
+import { desc, eq } from 'drizzle-orm'
 import { channelConnectionTable } from '~~/server/db/pg/schema'
 
 export default defineAuthenticatedHandler(async (event, session) => {

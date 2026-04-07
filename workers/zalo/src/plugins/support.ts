@@ -1,5 +1,5 @@
-import fp from 'fastify-plugin'
 import type { API } from 'zca-js'
+import fp from 'fastify-plugin'
 
 export default fp(async (fastify) => {
   fastify.decorate('zaloSessions', new Map<string, API>())

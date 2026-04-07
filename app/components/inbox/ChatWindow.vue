@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import type { MessageWithMeta } from '~/types'
+import type { ChatInstance } from '~/composables/useChat'
 import { formatDateSeparator } from '~/lib/utils'
 
 const props = defineProps<{ conversationId: string }>()
 
-const { messages, isLoading, hasMore, loadMore } = useChat(toRef(props, 'conversationId'))
+// Prefer the instance provided by the parent page (inbox/[id].vue) so ChatWindow
+// and MessageInput share the exact same reactive state.
+const chat = inject<ChatInstance | null>('chat', null)
+const { messages, isLoading, hasMore, loadMore } = chat ?? useChat(toRef(props, 'conversationId'))
 
 const scrollRef = ref<HTMLElement>()
 
@@ -25,11 +29,13 @@ function shouldShowDateSeparator(msgs: MessageWithMeta[], index: number): boolea
 }
 
 function shouldShowAvatar(msgs: MessageWithMeta[], index: number): boolean {
-  if (index === msgs.length - 1)
-    return true
+  if (index === 0) return true
+  const prev = msgs[index - 1]
   const curr = msgs[index]
-  const next = msgs[index + 1]
-  return curr.sender_type !== next.sender_type || curr.sender_name !== next.sender_name
+  if (curr.sender_type !== prev.sender_type || curr.sender_name !== prev.sender_name)
+    return true
+  const gap = new Date(curr.sent_at).getTime() - new Date(prev.sent_at).getTime()
+  return gap > 5 * 60 * 1000
 }
 
 function onScroll() {
@@ -47,8 +53,8 @@ function onScroll() {
   >
     <div v-if="isLoading && messages.length === 0" class="space-y-3 py-4">
       <div v-for="i in 5" :key="i" class="flex gap-2">
-        <USkeleton class="size-6 rounded-full shrink-0" />
-        <USkeleton class="h-10 rounded-xl" :class="i % 2 === 0 ? 'w-48 ml-auto' : 'w-64'" />
+        <USkeleton class="size-8 rounded-full shrink-0" />
+        <USkeleton class="h-10 rounded-xl w-64" />
       </div>
     </div>
 

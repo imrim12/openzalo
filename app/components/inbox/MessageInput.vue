@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import type { ChatInstance } from '~/composables/useChat'
+
 const props = defineProps<{ conversationId: string }>()
 
 const message = ref('')
-const { sendMessage, isSending } = useChat(toRef(props, 'conversationId'))
+const chat = inject<ChatInstance | null>('chat', null)
+const { sendMessage, isSending } = chat ?? useChat(toRef(props, 'conversationId'))
 
 async function handleSend() {
   if (!message.value.trim())

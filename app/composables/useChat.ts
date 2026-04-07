@@ -25,8 +25,7 @@ export function useChat(conversationId: MaybeRef<string>) {
     isLoading.value = true
     try {
       const params: Record<string, string> = { limit: '50' }
-      if (cursor)
-        params.cursor = cursor
+      if (cursor) params.cursor = cursor
 
       const data = await $http<MessageWithMeta[]>(`/api/conversations/${id.value}/messages`, { params })
 
@@ -37,11 +36,8 @@ export function useChat(conversationId: MaybeRef<string>) {
         messages.value = [...data, ...messages.value]
       }
 
-      if (data.length < 50)
-        hasMore.value = false
-      if (data.length > 0) {
-        cursor = data[0].sent_at.toString()
-      }
+      if (data.length < 50) hasMore.value = false
+      if (data.length > 0) cursor = data[0].sent_at.toString()
     }
     finally {
       isLoading.value = false
@@ -55,8 +51,7 @@ export function useChat(conversationId: MaybeRef<string>) {
         method: 'POST',
         body: { content, message_type: type },
       })
-      messages.value.push(msg)
-
+      messages.value = [...messages.value, msg]
       await $http(`/api/conversations/${id.value}/read`, { method: 'POST' })
     }
     finally {
@@ -65,16 +60,13 @@ export function useChat(conversationId: MaybeRef<string>) {
   }
 
   async function loadMore() {
-    if (!hasMore.value || isLoading.value)
-      return
+    if (!hasMore.value || isLoading.value) return
     await fetchMessages(false)
   }
 
   async function markAsRead() {
     await $http(`/api/conversations/${id.value}/read`, { method: 'POST' })
-    if (conversation.value) {
-      conversation.value.unread_count = 0
-    }
+    if (conversation.value) conversation.value.unread_count = 0
   }
 
   watch(id, (newId) => {
@@ -84,15 +76,7 @@ export function useChat(conversationId: MaybeRef<string>) {
     }
   }, { immediate: true })
 
-  return {
-    messages,
-    conversation,
-    isLoading,
-    isSending,
-    hasMore,
-    fetchMessages,
-    sendMessage,
-    loadMore,
-    markAsRead,
-  }
+  return { messages, conversation, isLoading, isSending, hasMore, fetchMessages, sendMessage, loadMore, markAsRead }
 }
+
+export type ChatInstance = ReturnType<typeof useChat>

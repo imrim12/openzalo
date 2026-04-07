@@ -1,4 +1,4 @@
-import { type FastifyPluginAsync } from 'fastify'
+import type { FastifyPluginAsync } from 'fastify'
 
 export default (async (fastify) => {
   // POST /action → { result }

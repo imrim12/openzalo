@@ -171,6 +171,7 @@ export const contactTable = pgTable('contacts', {
 }, table => [
   index('contacts_user_id_idx').on(table.user_id),
   index('contacts_channel_contact_id_idx').on(table.channel_contact_id),
+  uniqueIndex('contacts_channel_unique_idx').on(table.user_id, table.channel_type, table.channel_contact_id),
 ])
 
 export type Contact = InferSelect<typeof contactTable>
@@ -185,6 +186,8 @@ export const conversationTable = pgTable('conversations', {
     .notNull(),
   contact_id: uuid('contact_id')
     .references(() => contactTable.id, { onDelete: 'set null' }),
+  assigned_user_id: uuid('assigned_user_id')
+    .references(() => userTable.id, { onDelete: 'set null' }),
   channel_thread_id: varchar('channel_thread_id', { length: 255 }),
   thread_type: varchar('thread_type', { length: 32 }).default('user').notNull(),
   title: varchar('title', { length: 255 }),
@@ -202,6 +205,8 @@ export const conversationTable = pgTable('conversations', {
   index('conversations_channel_connection_id_idx').on(table.channel_connection_id),
   index('conversations_last_message_at_idx').on(table.last_message_at),
   index('conversations_channel_thread_id_idx').on(table.channel_thread_id),
+  index('conversations_assigned_user_id_idx').on(table.assigned_user_id),
+  uniqueIndex('conversations_channel_thread_unique_idx').on(table.channel_connection_id, table.channel_thread_id),
 ])
 
 export type Conversation = InferSelect<typeof conversationTable>
@@ -229,6 +234,7 @@ export const messageTable = pgTable('messages', {
   index('messages_conversation_id_idx').on(table.conversation_id),
   index('messages_sent_at_idx').on(table.sent_at),
   index('messages_channel_message_id_idx').on(table.channel_message_id),
+  uniqueIndex('messages_channel_message_unique_idx').on(table.conversation_id, table.channel_message_id),
 ])
 
 export type Message = InferSelect<typeof messageTable>
@@ -341,6 +347,12 @@ export const conversationRelations = relations(conversationTable, ({ one, many }
   user: one(userTable, {
     fields: [conversationTable.user_id],
     references: [userTable.id],
+    relationName: 'owner',
+  }),
+  assignedUser: one(userTable, {
+    fields: [conversationTable.assigned_user_id],
+    references: [userTable.id],
+    relationName: 'assignee',
   }),
   channelConnection: one(channelConnectionTable, {
     fields: [conversationTable.channel_connection_id],

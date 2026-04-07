@@ -7,7 +7,26 @@ const props = defineProps<{
   showAvatar: boolean
 }>()
 
+defineEmits<{ viewImage: [url: string] }>()
+
 const isAgent = computed(() => props.message.sender_type === 'agent')
+
+const displayName = computed(() =>
+  isAgent.value ? 'You' : (props.message.sender_name ?? 'Unknown'),
+)
+
+function proxyImageUrl(url: string) {
+  if (!url) return url
+  if (url.startsWith('/api/proxy/') || url.startsWith('data:') || url.startsWith('blob:')) return url
+  return `/api/proxy/image?url=${encodeURIComponent(url)}`
+}
+
+function isImageAttachment(attachment?: { type?: string, url?: string } | null) {
+  if (!attachment) return false
+  if (attachment.type === 'image') return true
+  const url = attachment.url ?? ''
+  return /\.(jpg|jpeg|png|gif|webp|bmp|heic)(\?|$)/i.test(url) || /\/(jpg|png|gif|img)\//i.test(url)
+}
 
 const contextMenuItems = [
   [
@@ -23,34 +42,27 @@ const contextMenuItems = [
 
 <template>
   <UContextMenu :items="contextMenuItems">
-    <div
-      class="flex gap-2 mb-1 max-w-[75%]"
-      :class="isAgent ? 'ml-auto flex-row-reverse' : ''"
-    >
-      <!-- Avatar (contact messages only) -->
-      <UAvatar
-        v-if="!isAgent && showAvatar"
-        :src="message.sender_avatar ?? undefined"
-        :alt="message.sender_name ?? undefined"
-        :text="message.sender_name?.[0]"
-        size="xs"
-        class="mt-auto shrink-0"
-      />
-      <div v-else-if="!isAgent" class="w-6 shrink-0" />
+    <div class="flex gap-2 py-0.5 px-2 hover:bg-(--ui-bg-elevated)/50 group">
+      <!-- Avatar column -->
+      <div class="w-8 shrink-0 pt-0.5">
+        <UAvatar
+          v-if="showAvatar"
+          :src="message.sender_avatar ?? undefined"
+          :alt="message.sender_name ?? undefined"
+          :text="message.sender_name?.[0]"
+          size="sm"
+        />
+      </div>
 
-      <!-- Bubble -->
-      <div
-        class="rounded-xl px-3 py-2 text-sm"
-        :class="isAgent
-          ? 'bg-(--ui-primary) text-white rounded-br-sm'
-          : 'bg-(--ui-bg-elevated) text-(--ui-text) rounded-bl-sm'"
-      >
-        <!-- Sender name (groups only) -->
-        <div
-          v-if="!isAgent && showAvatar && message.sender_name"
-          class="text-xs font-medium text-(--ui-primary) mb-0.5"
-        >
-          {{ message.sender_name }}
+      <div class="flex-1 min-w-0">
+        <!-- Header: name + time (first message in group) -->
+        <div v-if="showAvatar" class="flex items-baseline gap-2 mb-0.5">
+          <span class="text-sm font-semibold text-(--ui-text)">
+            {{ displayName }}
+          </span>
+          <span class="text-xs text-(--ui-text-muted)">
+            {{ formatTime(message.sent_at) }}
+          </span>
         </div>
 
         <!-- Reply quote -->
@@ -62,14 +74,15 @@ const contextMenuItems = [
         </div>
 
         <!-- Content by type -->
-        <p v-if="message.message_type === 'text'" class="whitespace-pre-wrap break-words">
+        <p v-if="message.message_type === 'text'" class="text-sm whitespace-pre-wrap break-words">
           {{ message.content }}
         </p>
         <img
-          v-else-if="message.message_type === 'image' && message.attachments?.[0]"
-          :src="message.attachments[0].url"
+          v-else-if="(message.message_type === 'image' || isImageAttachment(message.attachments?.[0])) && message.attachments?.[0]"
+          :src="proxyImageUrl(message.attachments[0].thumbnailUrl || message.attachments[0].url)"
           class="rounded-lg max-w-xs cursor-pointer"
-          :alt="message.attachments[0].fileName"
+          :alt="message.attachments[0].fileName ?? 'image'"
+          @click="$emit('viewImage', message.attachments[0].url)"
         >
         <div
           v-else-if="message.message_type === 'file' && message.attachments?.[0]"
@@ -77,7 +90,7 @@ const contextMenuItems = [
         >
           <UIcon name="i-lucide-file" class="size-8 shrink-0" />
           <div>
-            <div class="font-medium">
+            <div class="text-sm font-medium">
               {{ message.attachments[0].fileName }}
             </div>
             <div class="text-xs opacity-70">
@@ -90,11 +103,6 @@ const contextMenuItems = [
         </div>
         <div v-else-if="message.message_type === 'system'" class="text-xs italic opacity-60">
           {{ message.content }}
-        </div>
-
-        <!-- Timestamp -->
-        <div class="text-[10px] mt-1 opacity-60 text-right">
-          {{ formatTime(message.sent_at) }}
         </div>
       </div>
     </div>

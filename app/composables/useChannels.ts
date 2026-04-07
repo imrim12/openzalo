@@ -40,7 +40,24 @@ export function useChannels() {
     channels.value = channels.value.filter(c => c.id !== id)
   }
 
+  async function getQrCode(channelId: string) {
+    return $http<{ sessionId: string, qrUrl: string }>(`/api/channels/${channelId}/qr`)
+  }
+
+  async function pollQrStatus(channelId: string) {
+    return $http<{ status: 'pending' | 'confirmed' | 'expired' | 'declined' | 'no_session' }>(
+      `/api/channels/${channelId}/qr/status`,
+    )
+  }
+
+  async function syncChannel(channelId: string) {
+    return $http<{ success: boolean, friendsCount: number, errors: string[] }>(
+      `/api/channels/${channelId}/sync`,
+      { method: 'POST' },
+    )
+  }
+
   onMounted(fetchChannels)
 
-  return { channels, isLoading, fetchChannels, createChannel, updateChannel, deleteChannel }
+  return { channels, isLoading, fetchChannels, createChannel, updateChannel, deleteChannel, getQrCode, pollQrStatus, syncChannel }
 }

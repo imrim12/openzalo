@@ -1,6 +1,6 @@
-import { type FastifyPluginAsync } from 'fastify'
-import { Zalo, LoginQRCallbackEventType } from 'zca-js'
+import type { FastifyPluginAsync } from 'fastify'
 import crypto from 'node:crypto'
+import { LoginQRCallbackEventType, Zalo } from 'zca-js'
 import { setupListener } from '../../lib/listener'
 
 interface PendingQR {
@@ -30,17 +30,20 @@ export default (async (fastify) => {
             break
           case LoginQRCallbackEventType.QRCodeScanned: {
             const p = pendingQRs.get(sessionId)
-            if (p) p.status = 'scanned'
+            if (p)
+              p.status = 'scanned'
             break
           }
           case LoginQRCallbackEventType.QRCodeExpired: {
             const p = pendingQRs.get(sessionId)
-            if (p) p.status = 'expired'
+            if (p)
+              p.status = 'expired'
             break
           }
           case LoginQRCallbackEventType.QRCodeDeclined: {
             const p = pendingQRs.get(sessionId)
-            if (p) p.status = 'declined'
+            if (p)
+              p.status = 'declined'
             break
           }
         }
@@ -48,13 +51,15 @@ export default (async (fastify) => {
 
       loginPromise.then((api) => {
         const p = pendingQRs.get(sessionId)
-        if (p) p.status = 'confirmed'
+        if (p)
+          p.status = 'confirmed'
         setupListener(api, sessionId)
         fastify.zaloSessions.set(sessionId, api)
         pendingQRs.delete(sessionId)
       }).catch((err) => {
         const p = pendingQRs.get(sessionId)
-        if (p) p.status = 'expired'
+        if (p)
+          p.status = 'expired'
         console.error('[auth] QR login failed:', err)
       })
     })

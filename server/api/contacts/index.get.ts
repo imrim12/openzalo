@@ -1,4 +1,4 @@
-import { and, desc, eq, ilike, or } from 'drizzle-orm'
+import { and, eq, ilike, or } from 'drizzle-orm'
 import { z } from 'zod'
 import { contactTable } from '~~/server/db/pg/schema'
 

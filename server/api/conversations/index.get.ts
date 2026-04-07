@@ -1,4 +1,4 @@
-import { and, desc, eq, lt, sql } from 'drizzle-orm'
+import { and, desc, eq, lt, or, sql } from 'drizzle-orm'
 import { z } from 'zod'
 import { contactTable, conversationTable } from '~~/server/db/pg/schema'
 
@@ -13,7 +13,13 @@ export default defineAuthenticatedHandler(async (event, session) => {
   const query = await getValidatedQuery(event, querySchema.parse)
   const db = getPgClient()
 
-  const conditions = [eq(conversationTable.user_id, session.id)]
+  // Owner sees all their conversations; assignees see only conversations assigned to them
+  const conditions = [
+    or(
+      eq(conversationTable.user_id, session.id),
+      eq(conversationTable.assigned_user_id, session.id),
+    ),
+  ]
 
   if (query.status) {
     conditions.push(eq(conversationTable.status, query.status))

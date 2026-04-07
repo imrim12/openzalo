@@ -1,4 +1,4 @@
-import { type FastifyPluginAsync } from 'fastify'
+import type { FastifyPluginAsync } from 'fastify'
 
 const root: FastifyPluginAsync = async (fastify) => {
   fastify.get('/health', async () => ({

@@ -183,6 +183,8 @@ export default defineNuxtConfig({
 
     taskSecret: '',
 
+    zaloWorkerUrl: '',
+
     public: {
       sslEnabled: false,
 
