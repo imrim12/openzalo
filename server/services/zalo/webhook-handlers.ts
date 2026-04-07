@@ -52,6 +52,8 @@ export async function handleZaloMessage(db: Db, sessionId: string, data: ZaloMes
 
   // Ensure contact exists for the sender (DMs only)
   let contactId: string | undefined
+  let contactName: string | undefined
+  let contactAvatar: string | undefined
   if (!isGroup) {
     const contact = await upsertZaloContact(db, {
       userId: channel.user_id,
@@ -60,6 +62,8 @@ export async function handleZaloMessage(db: Db, sessionId: string, data: ZaloMes
       name: data.fromUid, // best we can do without a name lookup
     })
     contactId = contact.id
+    contactName = contact.name
+    contactAvatar = contact.avatar ?? undefined
   }
 
   const conv = await upsertZaloConversation(db, {
@@ -98,6 +102,8 @@ export async function handleZaloMessage(db: Db, sessionId: string, data: ZaloMes
       conversation_id: conv.id,
       channel_message_id: data.msgId,
       sender_type: senderType,
+      sender_name: senderType === 'contact' ? contactName : undefined,
+      sender_avatar: senderType === 'contact' ? contactAvatar : undefined,
       message_type: msgType,
       content: data.message,
       attachments,
