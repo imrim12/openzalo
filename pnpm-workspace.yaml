@@ -15,11 +15,13 @@ catalog:
   '@nuxt/icon': 2.2.1
   '@nuxt/scripts': 0.13.2
   '@nuxt/test-utils': 4.0.0
+  '@nuxt/ui': ^4.6.1
   '@nuxtjs/device': 4.0.0
   '@octokit/types': ^16.0.0
   '@pinia/nuxt': ^0.11.3
   '@playwright/test': ^1.59.1
   '@tanstack/vue-table': ^8.21.3
+  '@types/qrcode': ^1.5.6
   '@upstash/redis': ^1.37.0
   '@vitest/coverage-v8': ^4.1.2
   '@vue/test-utils': ^2.4.6
@@ -36,19 +38,22 @@ catalog:
   magic-regexp: ^0.11.0
   mongodb: ^7.1.1
   nanoid: ^5.1.7
-  nitro: latest
+  nitropack: ^2.13.3
   nodemailer: ^8.0.4
   nuxt: ^4.4.2
   nuxt-security: ^2.5.1
   pg: ^8.20.0
   playwright-core: ^1.59.1
+  qrcode: ^1.5.4
   tailwind-merge: ^3.5.0
   tailwindcss: ^4.2.2
   ts-enum-util: ^4.1.0
   ts-pattern: ^5.9.0
   type-fest: ^5.5.0
+  ufo: ^1.6.1
   unstorage: ^1.17.5
   vitest: ^4.1.2
   vue: ^3.5.31
   vue-router: ^5.0.4
+  zca-js: ^2.1.2
   zod: ^4.3.6

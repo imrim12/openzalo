@@ -1,0 +1,17 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+RUN corepack enable
+
+# Copy all monorepo files needed for install + build
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY workers/zalo ./workers/zalo
+
+RUN pnpm install --frozen-lockfile --filter @openzalo/zalo...
+
+RUN pnpm --filter @openzalo/zalo build
+
+EXPOSE 3000
+
+CMD ["workers/zalo/node_modules/.bin/fastify", "start", "-l", "info", "-a", "0.0.0.0", "workers/zalo/dist/app.js"]

@@ -40,6 +40,14 @@ export default withNuxt(
     },
   },
   {
-    ignores: ['node_modules', '.nuxt', '.claude', '.agents', '.docker', 'dist'],
+    ignores: [
+      '**/node_modules/**',
+      '**/.nuxt/**',
+      '**/.nitro/**',
+      '.claude',
+      '.agents',
+      '.docker',
+      'dist',
+    ],
   },
 )

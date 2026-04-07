@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@neondatabase/serverless": "catalog:",
-    "@nuxt/ui": "^4.6.1",
+    "@nuxt/ui": "catalog:",
     "@tanstack/vue-table": "catalog:",
     "@upstash/redis": "catalog:",
     "clsx": "catalog:",
